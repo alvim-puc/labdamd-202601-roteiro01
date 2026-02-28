@@ -20,12 +20,17 @@ def cliente_nervoso(id_cliente):
         # Se passou daqui, o SO aceitou a conexão (está no backlog ou sendo atendido)
         print(f"[CLIENTE {id_cliente:02d}] 🟢 Conectou! Esperando resposta...")
         
+        client.settimeout(5) # Agora espera um pouco mais para a resposta do servidor
+        
+        mensagem = f"Tarefa do Cliente {id_cliente}"
+        client.send(mensagem.encode('utf-8'))
+        
         # Agora espera os dados
         msg = client.recv(1024)
         print(f"[CLIENTE {id_cliente:02d}] 🏆 SUCESSO: {msg.decode()}")
         
     except socket.timeout:
-        print(f"[CLIENTE {id_cliente:02d}] ⏱️ TIMEOUT: O servidor demorou demais para aceitar!")
+        print(f"[CLIENTE {id_cliente:02d}] ⏱️ TIMEOUT: O servidor demorou demais para responder!")
     except ConnectionRefusedError:
         print(f"[CLIENTE {id_cliente:02d}] ⛔ RECUSADO: A fila estava cheia!")
     except Exception as e:
