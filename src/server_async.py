@@ -3,7 +3,6 @@ import asyncio
 HOST = '127.0.0.1'
 PORT = 65432
 
-
 async def handle_client(reader: asyncio.StreamReader, writer: asyncio.StreamWriter):
     """
     Corrotina chamada pelo Event Loop para cada nova conexão.
@@ -20,7 +19,7 @@ async def handle_client(reader: asyncio.StreamReader, writer: asyncio.StreamWrit
     else:
         print(f"[{addr}] Sem mensagem recebida.")
 
-    await asyncio.sleep(5)
+    await asyncio.sleep(5) # Simula um processamento
 
     resposta = f"Processado: {msg}".encode('utf-8')
     writer.write(resposta)
